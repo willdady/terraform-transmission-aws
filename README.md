@@ -1,6 +1,6 @@
 # terraform-transmission-aws
 
-A [Terraform](terraform) configuration for provisioning an EC2 instance and runs [Transmission](transmission) over [OpenVPN](openvpn) with completed downloads automatically copied to an S3 bucket.
+A [Terraform](terraform) configuration for provisioning an EC2 instance for running [Transmission](transmission) over [OpenVPN](openvpn) with completed downloads automatically copied to an S3 bucket.
 
 This is intended for ephemeral deployments where you may spin-up an instance for an hour or two and then destroy it. It's not intended for long-running use.
 
@@ -31,9 +31,9 @@ Once you've defined your variables apply the configuration.
 terraform apply
 ```
 
-Once terraform is finished you will get the URL of the Transmission
+Once the configuration is applied you will get the output URL of Transmission's WebUI. Note you may need to wait a minute or two for the software provisioning to complete before the instance is available to use.
 
-And once finished, destroy.
+Once you are finished with the instance you can simply destroy it.
 
 ```bash
 terraform destroy
