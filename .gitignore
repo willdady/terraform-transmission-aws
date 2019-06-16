@@ -1,2 +1,6 @@
 .terraform
+.vscode
 *.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
