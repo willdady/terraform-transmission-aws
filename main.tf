@@ -1,23 +1,25 @@
-variable "openvpn_provider" {}
-variable "openvpn_config" {}
-variable "openvpn_username" {}
-variable "openvpn_password" {}
-variable "aws_region" {}
-variable "aws_key_name" {}
-variable "aws_vpc_id" {}
-variable "aws_subnet_id" {}
-variable "aws_instance_type" {
-  default = "t2.micro"
-}
-variable "aws_ami" {}
-variable "aws_s3_bucket" {}
-
-output "webui" {
-  value = "http://${aws_instance.transmission_box.public_ip}:8080/transmission/web/"
-}
-
 provider "aws" {
   region = "${var.aws_region}"
+}
+
+data "aws_ami" "amazon_linux_2" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+  }
 }
 
 resource "aws_security_group" "transmission-sg" {
@@ -97,7 +99,7 @@ resource "aws_iam_instance_profile" "transmission_box_profile" {
 }
 
 resource "aws_instance" "transmission_box" {
-  ami                    = "${var.aws_ami}"
+  ami                    = "${aws_ami.amazon_linux_2.id}"
   instance_type          = "${var.aws_instance_type}"
   subnet_id              = "${var.aws_subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.transmission-sg.id}"]
@@ -143,6 +145,7 @@ resource "aws_instance" "transmission_box" {
       -e WATCH_PATH=/data/ \
       -e AWS_REGION=${var.aws_region} \
       -e AWS_S3_BUCKET=${var.aws_s3_bucket} \
+      -e PATH_PATTERN=${var.path_pattern} \
       willdady/go-watch-s3
   EOF
 }

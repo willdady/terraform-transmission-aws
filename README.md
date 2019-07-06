@@ -1,6 +1,6 @@
 # terraform-transmission-aws
 
-A [Terraform](terraform) configuration for provisioning an EC2 instance for running [Transmission](transmission) over [OpenVPN](openvpn) with completed downloads automatically copied to an S3 bucket.
+A [Terraform](terraform) module for provisioning an EC2 instance for running [Transmission](transmission) over [OpenVPN](openvpn) with completed downloads automatically copied to an S3 bucket.
 
 This is intended for ephemeral deployments where you may spin-up an instance for an hour or two and then destroy it. It's not intended for long-running use.
 
@@ -23,7 +23,7 @@ Initialise terraform
 terraform init
 ```
 
-You will need to provide values for all variables defined at the top of `stack.tf`. The easy way to do this is by creating a `terraform.tfvars` file. See the [terraform docs](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) for more information.
+You will need to provide values for the variables defined in `variables.tf`. The easy way to do this is by creating a `terraform.tfvars` file. See the [terraform docs](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files) for more information.
 
 Once you've defined your variables apply the configuration.
 
