@@ -99,7 +99,7 @@ resource "aws_iam_instance_profile" "transmission_box_profile" {
 }
 
 resource "aws_instance" "transmission_box" {
-  ami                    = "${aws_ami.amazon_linux_2.id}"
+  ami                    = "${data.aws_ami.amazon_linux_2.id}"
   instance_type          = "${var.aws_instance_type}"
   subnet_id              = "${var.aws_subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.transmission-sg.id}"]
